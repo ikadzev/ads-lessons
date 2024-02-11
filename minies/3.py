@@ -1,19 +1,19 @@
 x = int(input('Needed number: '))
-n = int(input('Number of elements: '))
+init_n = int(input('Number of elements: '))
 lst = []
 print('Elements: ', end='')
-for _ in range(n):
+for _ in range(init_n):
     lst.append(int(input()))
-while True:
-    cent = n // 2
+n = [0, init_n]
+for _ in range(10):
+    cent = (n[0] + n[1]) // 2
     print(lst, cent)
     if lst[cent] != x:
         if lst[cent] > x:
-            lst = lst[:cent]
+            n[1] = cent
         else:
-            lst = lst[cent:]
-        n = len(lst)
+            n[0] = cent
     else:
-        lst = cent+1
+        n = cent+1
         break
-print(lst)
+print(n)
