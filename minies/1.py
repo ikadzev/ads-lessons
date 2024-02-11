@@ -10,6 +10,8 @@ def division(n, m):
     outnum, curnum = '', ''
     noo = 0 # number of operations
     for i in n:
+        if i == '-':
+            continue
         print('cursor:', i)
         curnum += i
         noo += 1
@@ -35,7 +37,7 @@ def division(n, m):
     out = f'output is {int(outnum)}, number of operations is {noo}'
     return out
 
-n, m = '4444', '5'
+n, m = '999', '11'
 print(division(n, m))
 
 n, m = '123', '5'
