@@ -93,18 +93,22 @@ def sort(lst, s=0, e=None):
     lst = merge(lst, 0, cent // 2, cent // 2, cent // 2, cent)
 
     ln = [cent // 2, cent]
-    while ln[1] - ln[0] != 0:
+    while ln[1] - ln[0] != 1:
         lst = sort(lst, ln[0] + ln[0] // 2, ln[1])
         lst = merge(lst, ln[0], ln[0] // 2, ln[0] + ln[0] // 2, ln[0] // 2, 0)
         lst = merge(lst, s, ln[0], ln[1], n - ln[1], ln[0])
         ln = [ln[0] // 2, ln[1] // 2]
-    # lst = sort(lst, ln[0] + ln[0] // 2, ln[1])
-    # lst = merge(lst, ln[0], ln[0] // 2, ln[0] + ln[0] // 2, ln[0] // 2, 0)
-    # lst = merge(lst, s, ln[0], ln[1], n - ln[1], ln[0])
+    lst = sort(lst, ln[0] + ln[0] // 2, ln[1])
+    lst = merge(lst, ln[0], ln[0] // 2, ln[0] + ln[0] // 2, ln[0] // 2, 0)
+    lst = merge(lst, s, ln[0], ln[1], n - ln[1], ln[0])
+    i = 0
+    while lst[i] > lst[i + 1]:
+        swap(lst, i, i+1)
+        i += 1
     return lst
 
 
-numbers = '11 30 12 40 19 7 15 14'
+numbers = '24 11 32 15 6 14 17 9' # 36 16 18 33 5 10 29 25'
 # numbers = '8 7 6 5 4 3 2 1'
 str_list = numbers.split()
 int_list = [int(i) for i in str_list]
