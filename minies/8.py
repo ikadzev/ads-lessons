@@ -1,41 +1,54 @@
 import random
 
-def swap(lst, f, s):
-    lst[f], lst[s] = lst[s], lst[f]
+
+def swap(a, f, s):
+    a[f], a[s] = a[s], a[f]
 
 
 def merge_n_count(f, s):
-    count = 0
+    cnt = 0
     b = []
     i, j = 0, 0
+
     while i < len(f) and j < len(s):
         if f[i] < s[j]:
             b.append(f[i])
             i += 1
         else:
-            count += len(f) - i
+            cnt += len(f) - i
             b.append(s[j])
             j += 1
     while i < len(f):
         b.append(f[i])
         i += 1
     while j < len(s):
-        count += len(f) - i
         b.append(s[j])
         j += 1
-    return count, b
+
+    return [cnt, b]
 
 
-def sort_n_count(lst):
-    n = len(lst)
-    if n == 1:
-        return 0
+def sort_n_count(first):
+    num = len(first)
+    if num == 1:
+        return [0, first]
 
-    cnt = n // 2
-    f = sort_n_count(lst[:cnt])
-    s = sort_n_count(lst[cnt:])
-    count, lst = merge_n_count(lst[:cnt], lst[cnt:])
-    return f + s + count
+    cnt = num // 2
+    f = sort_n_count(first[:cnt])
+    s = sort_n_count(first[cnt:])
+    first = f[1] + s[1]
+    count = merge_n_count(first[:cnt], first[cnt:])
+    first = count[1]
+    return [f[0] + s[0] + count[0], first]
+
+
+def perm(first):
+    loc = 0
+    for i in range(len(first) - 1):
+        if first[i] > first[i + 1]:
+            loc += 1
+    glob = sort_n_count(first)
+    return glob[0] == loc
 
 
 numbers = input('циферки через пробел (пусто - рандом): ')
@@ -46,4 +59,5 @@ if not numbers:
 else:
     str_list = numbers.split()
     lst = [int(i) for i in str_list]
-print('инвертики-конвертики:', sort_n_count(lst))
+# print('инвертики-конвертики:', sort_n_count(lst))
+print(perm(lst))

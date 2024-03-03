@@ -15,10 +15,10 @@ def h_index(citations):
             return 0
 
     k = 1
-    while (3**k-1)//2 < len(citations):
+    while (3 ** k - 1) // 2 < len(citations):
         k += 1
     while k > 0:
-        citations = insertion_sort_k(citations, (3**k-1)//2)
+        citations = insertion_sort_k(citations, (3 ** k - 1) // 2)
         k -= 1
 
     print(citations)
@@ -29,4 +29,4 @@ def h_index(citations):
     return len(citations)
 
 
-print(h_index([3,0,6,1,5]))
+print(h_index([3, 0, 6, 1, 5]))

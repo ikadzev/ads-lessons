@@ -1,6 +1,6 @@
-DEBUG_RETURN = 0
-DEBUG_SORT = 0
 DEBUG_MERGE = 0
+DEBUG_SORT = 0
+DEBUG_RETURN = 0
 
 
 def swap(lst, f, s):
@@ -8,7 +8,7 @@ def swap(lst, f, s):
 
 
 def merge(lst, f, lf, s, ls, buff):
-
+    print('merging', lst[f:lf], 'and', lst[s:ls], 'in', lst, 'with buff', lst[buff:]) if DEBUG_MERGE else None
     while f < lf and s < ls:
         if lst[f] < lst[s]:
             swap(lst, f, buff)
@@ -25,21 +25,25 @@ def merge(lst, f, lf, s, ls, buff):
         swap(lst, s, buff)
         s += 1
         buff += 1
+    print('returning', lst) if DEBUG_RETURN else None
     return lst
 
 
 def sort(lst, s=0, e=-1):
     e = e if e != -1 else len(lst)
+    print('sorting', lst[s:e], 'in', lst) if DEBUG_SORT else None
+
     n = e - s
     assert n != 0
     if n == 1:
         return lst
     if n < 4:
-        for i in range(e - 2, s - 1, -1):
-            if lst[i] > lst[i + 1]:
-                t = i
-                while lst[t] > lst[t + 1] and t < e:
-                    swap(lst, t, t+1)
+        for i in range(e - 2, s - 1, -1):  # insertion sort
+            t = i
+            while t < e - 1 and lst[t] > lst[t + 1]:
+                swap(lst, t, t + 1)
+                t += 1
+        print('sorted', lst[s:e], 'in', lst) if DEBUG_RETURN else None
         return lst
 
     start = s
@@ -66,7 +70,7 @@ def sort(lst, s=0, e=-1):
     return lst
 
 
-numbers = '24 11 15 32 6 14 17 36 16 18 33 5 10 29 25'
+numbers = '15 74 14 27 33 40 5 44 57 45 4 97 49 3 31 54 79 13 86 4 30 48 66 36 27 71 89'
 str_list = numbers.split()
 int_list = [int(i) for i in str_list]
 print(sort(int_list))
