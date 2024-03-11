@@ -1,47 +1,31 @@
-# m = input('M: ')
-# n = input('N: ')
-
-# try:
-#     _, _ = int(n), int(m)
-# except ValueError:
-#     print('NaN')
-    
 def division(n, m):
-    outnum, curnum = '', ''
-    noo = 0 # number of operations
-    for i in n:
-        if i == '-':
+    outnum, curnum = 0, 0
+    n = abs(n)
+    for i in range(len(str(n)) - 1, -1, -1):
+        curnum *= 10
+        curnum += (n // 10**i % 10)
+        print(curnum)
+        if m > curnum:
+            outnum *= 10
+            print('too small')
             continue
-        print('cursor:', i)
-        curnum += i
-        noo += 1
-        if int(m) > int(curnum):
-            print('curnum too small\n')
-            continue
-        d = int(m)
-        curint = int(curnum)
+        d = m
         cnt = 0
-        print('current:', curint)
-        while curint >= d:
-            d += int(m)
+        while curnum >= d:
+            d += m
             cnt += 1
-            noo += 2
-        d -= int(m)
-        outnum += str(cnt)
-        curnum = str(curint - d)
-        noo += 3
-        print('deducted:', d, '\ncurrent out:', outnum, '\ncurrent:', curnum)
-        print()
-    if not outnum:
-        outnum = 0
-    out = f'output is {int(outnum)}, number of operations is {noo}'
+        d -= m
+        outnum *= 10
+        outnum += cnt
+        curnum = curnum - d
+    out = f'output is {outnum}'
     return out
 
-n, m = '999', '11'
+n, m = 999, 11
 print(division(n, m))
 
-n, m = '123', '5'
+n, m = 123, 5
 print(division(n, m))
 
-n, m = '0', '5'
+n, m = 0, 5
 print(division(n, m))
