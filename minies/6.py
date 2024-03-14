@@ -9,24 +9,25 @@ def insertion_sort_k(lst, k):
 
 def wiggle_sort(lst):
     k = 1
-    while (3**k-1)//2 < len(lst):
+    while (3 ** k - 1) // 2 < len(lst):
         k += 1
     while k > 0:
-        lst = insertion_sort_k(lst, (3**k-1)//2)
+        lst = insertion_sort_k(lst, (3 ** k - 1) // 2)
         k -= 1
-    # print(lst)
+
     hlen = len(lst) // 2
     hlen += 1 if len(lst) % 2 else 0
     f_half = lst[:hlen]
     s_half = lst[hlen:]
-    print(f_half, s_half)
+
     new_lst = []
     for i in range(hlen - 1):
         new_lst.append(f_half[i])
         new_lst.append(s_half[i])
-    new_lst.append((f_half[-1]))
+    new_lst.append(f_half[-1])
     if len(lst) % 2 == 0:
-        new_lst.append((s_half[-1]))
+        new_lst.append(s_half[-1])
     return new_lst
 
-print(wiggle_sort([1,5,1,1,6]))
+
+print(wiggle_sort([1, 5, 1, 1, 6]))
