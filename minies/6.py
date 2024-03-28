@@ -1,10 +1,19 @@
+def move(array, index, place):
+    if index == place:
+        return
+    c = array[index]
+    step = -1 if place < index else 1
+    for i in range(index, place, step):
+        array[i] = array[i + step]
+    array[place] = c
+
+
 def insertion_sort_k(lst, k):
     for i in range(k, len(lst)):
         j = i
         while j - k >= 0 and lst[j - k] > lst[j]:
             lst[j - k], lst[j] = lst[j], lst[j - k]  # swap
             j -= k
-    return lst
 
 
 def wiggle_sort(lst):
@@ -12,22 +21,17 @@ def wiggle_sort(lst):
     while (3 ** k - 1) // 2 < len(lst):
         k += 1
     while k > 0:
-        lst = insertion_sort_k(lst, (3 ** k - 1) // 2)
+        insertion_sort_k(lst, (3 ** k - 1) // 2)
         k -= 1
 
     hlen = len(lst) // 2
     hlen += 1 if len(lst) % 2 else 0
-    f_half = lst[:hlen]
-    s_half = lst[hlen:]
+    c = hlen - 1
 
-    new_lst = []
-    for i in range(hlen - 1):
-        new_lst.append(f_half[i])
-        new_lst.append(s_half[i])
-    new_lst.append(f_half[-1])
-    if len(lst) % 2 == 0:
-        new_lst.append(s_half[-1])
-    return new_lst
+    for i in range(hlen, len(lst)):
+        move(lst, i, i - c)
+        c -= 1
+    return lst
 
 
-print(wiggle_sort([1, 5, 1, 1, 6]))
+print(wiggle_sort([1, 2, 3, 4, 5, 6, 7]))
