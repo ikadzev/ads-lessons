@@ -1,0 +1,3 @@
+[submodule "labs/first"]
+	path = labs/first
+	url = https://github.com/nsu-syspro/algorithms-first-task-2024-ikadzev
