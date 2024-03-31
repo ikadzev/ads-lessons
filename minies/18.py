@@ -32,7 +32,3 @@ def pol(prompt):
         ret.append(stk.pop())
     return ret
 
-
-inp = input('Введите пример через пробелы: ')
-# inp = '1 + 3 * ( 5 ^ 2 )'
-print(*pol(inp), sep=' ')

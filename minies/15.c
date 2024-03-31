@@ -32,6 +32,7 @@ void removeFromArr(DynArrStr* arr) {
         if (arr->length * 4 < arr->capacity) {
             arr->capacity = arr->length;
             arr->data = (int*)realloc(arr->data, arr->capacity * sizeof(int));
+            nullCheck(arr->data);
         }
         arr->length--;
     } else {
