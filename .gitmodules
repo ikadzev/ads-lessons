@@ -1,3 +1,6 @@
 [submodule "labs/first"]
 	path = labs/first
 	url = https://github.com/nsu-syspro/algorithms-first-task-2024-ikadzev
+[submodule "labs/second"]
+	path = labs/second
+	url = https://github.com/nsu-syspro/algorithms-second-task-2024-ikadzev
