@@ -1,26 +1,34 @@
-def move(array, index, place):
-    if index == place:
-        return
-    c = array[index]
-    step = -1 if place < index else 1
-    for i in range(index, place, step):
-        array[i] = array[i + step]
-    array[place] = c
+def swap(array: list[int], first: int, second: int) -> None:
+    array[first], array[second] = array[second], array[first]
 
 
-def flag(array):
-    colors = [0, 0, 0]
-    n = 0
-    while n != len(array):
-        color = array[n]
-        move(array, n, colors[color])
-        colors[color] += 1
-        if color <= 1:
-            colors[2] += 1
-            if color == 0:
-                colors[1] += 1
-        n += 1
+def flag(array: list[int]) -> None:
+    length = len(array)
+    i = 0
+    colors = [0, 0, length - 1]
+    while i < length and i <= colors[2]:
+        if array[i] == 0:
+            if i != colors[0]:
+                swap(array, i, colors[0])
+            colors[0] += 1
+            colors[1] += 1
+            swappable = colors[0] - 1
+        elif array[i] == 1:
+            colors[1] += 1
+            swappable = i
+        elif array[i] == 2:
+            if i != colors[2]:
+                swap(array, i, colors[2])
+            colors[2] -= 1
+            swappable = colors[2] + 1
+        else:
+            print('Wrong value in array!')
+            exit(1)
+        if swappable == i:
+            i += 1
 
-arr = [2,0,2,1,1,0]
+
+# arr = [2, 2, 2, 2]
+arr = [2, 0, 1]
 flag(arr)
 print(arr)
