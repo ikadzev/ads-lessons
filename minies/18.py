@@ -1,6 +1,7 @@
 def pol(prompt):
-    priority = {'^': 0, '*': 1, '/': 1, '+': 2, '-': 2, '<<': 3, '>>': 3, '<': 4, '<=': 4, '>': 4, '>=': 4, '&': 5,
-                '|': 6, '&&': 7, '||': 8}
+    priority = {'^': (0, False), '*': (1, True), '/': (1, True), '+': (2, True), '-': (2, True), '<<': (3, True),
+                '>>': (3, True), '<': (4, True), '<=': (4, True), '>': (4, True), '>=': (4, True), '&': (5, True),
+                '|': (6, True), '&&': (7, True), '||': (8, True)}
     ret = []
     cnt_brk = []
     stk = []
@@ -21,7 +22,7 @@ def pol(prompt):
                     stk.append(lex)
                     cnt_brk[-1] += 1
                     continue
-                while stk and priority[lex] > priority[stk[-1]]:
+                while stk and priority[lex][0] >= priority[stk[-1]][0] and priority[lex][1]:
                     ret.append(stk.pop())
                     if cnt_brk:
                         cnt_brk[-1] -= 1
@@ -32,3 +33,6 @@ def pol(prompt):
         ret.append(stk.pop())
     return ret
 
+
+test = '1 + 2 ^ 3 + 4'
+print(pol(test))
