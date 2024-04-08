@@ -1,3 +1,6 @@
+import time
+
+
 def counting_sort(sorts, digit=None):
     if digit:
         sorts, digit = digit, sorts
@@ -14,11 +17,23 @@ def counting_sort(sorts, digit=None):
 
 
 def lsd_sort(sorts):
+    if not sorts:
+        return sorts
     for i in range(len(str(sorts[0])) - 1, -1, -1):
         digit = [ord(str(j)[i]) for j in sorts]
         sorts = counting_sort(sorts, digit)
     return sorts
 
 
-lst = 'ab ee fd it lo'.split()
-print(lsd_sort(lst))
+alphabet = 'abcdefghijklmnopqrstuvwxyz'
+lst = ''
+for i in range(1000):
+    lst += ((alphabet[i:] + alphabet[:i]) * 1000)[::-1]
+    lst += ' '
+lst = lst.split()
+t = time.time()
+lsd_sort(lst)
+print(time.time() - t)
+t = time.time()
+sorted(lst)
+print(time.time() - t)
