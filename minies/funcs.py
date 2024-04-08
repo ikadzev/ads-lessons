@@ -2,6 +2,32 @@ import copy
 import numpy as np
 
 
+def swap(array, f, s):
+    array[f], array[s] = array[s], array[f]
+
+
+def flag(array: list[int], pivot: int):
+    length = len(array)
+    i = 0
+    colors = [0, length - 1]
+    while i < length and i <= colors[1]:
+        if array[i] < pivot:
+            if i != colors[0]:
+                swap(array, i, colors[0])
+            colors[0] += 1
+            swappable = colors[0] - 1
+        elif array[i] == pivot:
+            swappable = i
+        else:
+            if i != colors[1]:
+                swap(array, i, colors[1])
+            colors[1] -= 1
+            swappable = colors[1] + 1
+        if swappable == i:
+            i += 1
+    return array, colors
+
+
 def _neg(a: list) -> list:
     negative = np.zeros((len(a), len(a[0])), int).tolist()
     for i in range(len(a)):
@@ -155,3 +181,26 @@ def mult_sht(first: list[list[int]], second: list[list[int]]) -> list[list[int]]
     for i in range(len(res)):
         res[i] = res[i][:orig_n]
     return res[:orig_n]
+
+
+def format_table(types: list[str], parameters: list[str], results: list[list], bench_name: str = "Benchmark"):
+    ret = ''
+
+    maxes = [max(9, max([len(i) for i in types]), len(bench_name))]
+    for n in range(len(parameters)):
+        maxes.append(max(len(parameters[n]), max(
+            [len(str(results[j][n])) for j in range(len(results))])))
+
+    ret += f'| {bench_name:<{maxes[0]}} | '
+    for i in range(len(parameters)):
+        ret += f' {parameters[i]:<{maxes[i + 1]}} |'
+
+    ret += '\n|' + '-' * (sum(maxes) + 3 * len(parameters) + 3) + '|\n'
+
+    for i in range(len(types)):
+        ret += f'| {types[i]:<{maxes[0]}} | '
+        for j in range(len(results[i])):
+            ret += f' {results[i][j]:<{maxes[j + 1]}} |'
+        ret += '\n'
+
+    return ret
