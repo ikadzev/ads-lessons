@@ -7,7 +7,7 @@ def bench(algos: list[tuple], tests: list):
     if not tests:
         print('No tests provided.')
         return
-    params = [f'Test {i + 1}' for i in range(len(tests))]
+    params = [str(len(tests[i][0])) for i in range(len(tests))]
     if not algos:
         print('No algorithms provided.')
         return
@@ -20,12 +20,11 @@ def bench(algos: list[tuple], tests: list):
             res[i].append(time.time() - start)
     return format_table(algos_names, params, res)
 
-f = np.arange(1, 37).reshape(6, 6).tolist()
-s = np.arange(36, 0, -1).reshape(6, 6).tolist()
-tests = [[f, s]]
-# f = np.arange(1, 22501).reshape(150, 150).tolist()
-# s = np.arange(22500, 0, -1).reshape(150, 150).tolist()
-f = np.arange(1, 10001).reshape(100, 100).tolist()
-s = np.arange(10000, 0, -1).reshape(100, 100).tolist()
-tests.append([f, s])
-print(bench([('Usual mult', mult_usual), ("Mult by 8 rec's", mult_8), ("Strassen's mult", mult_sht)], tests))
+
+test = []
+for i in range(40, 101, 20):
+    f = np.arange(1, i ** 2 + 1).reshape(i, i).tolist()
+    s = np.arange(i ** 2, 0, -1).reshape(i, i).tolist()
+    test.append([f, s])
+
+print(bench([('Usual mult', mult_usual), ("Mult by 8 rec's", mult_8), ("Strassen's mult", mult_sht)], test))
