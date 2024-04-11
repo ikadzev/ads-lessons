@@ -11,47 +11,51 @@ class BinomialHeap:
 
     def __init__(self, array=None, head=None):
         self.heads = dict()
+        self.min = None
         if array:
             for val in array:
                 self.insert(val)
         if head:
-            self.heads[head.prio] = head
+            if isinstance(head, BinomialHeap.Head):
+                self.heads[head.prio] = head
+            else:
+                for h in head:
+                    self.heads[h.prio] = h
 
     def insert(self, value):
-        if len(self.heads.values()) != 0:
-            pyro = BinomialHeap()
-            pyro.heads[0] = self.Head(value)
-            self.merge(pyro)
-        else:
-            self.heads[0] = self.Head(value)
+        v_head = self.Head(value)
+        if not self.min or value < self.min.value:
+            self.min = v_head
+        self.merge(BinomialHeap(head=v_head))
         return
 
     def peek_min(self):
-        min_list = [i.value for i in self.heads.values() if i]
-        return min(min_list)
+        return self.min.value
 
     def peek_min_head(self):
-        min_list = [i.value for i in self.heads.values() if i]
-        mini = min(min_list)
-        for i in range(len(self.heads)):
-            if self.heads[i] and self.heads[i].value == mini:
-                return self.heads[i]
+        return self.min
 
     def extract_min(self):
-        min_list = [i.value for i in self.heads.values() if i]
-        mini = min(min_list)
-        for i in range(len(self.heads)):
-            if self.heads[i] and self.heads[i].value == mini:
-                mini = self.heads[i]
-                self.heads[i] = None
-                break
+        mini = self.min
+        self.heads[mini.prio] = None
         if mini.kids:
-            for i in mini.kids:
-                pyro = BinomialHeap(head=i)
-                self.merge(pyro)
+            pyro = BinomialHeap(head=mini.kids)
+            self.merge(pyro)
+        self.min = self._seek_min()
         return mini.value
 
-    def decrease_key(self, head, k):
+    def _seek_min(self):
+        hd = [i for i in self.heads.values() if i]
+        vl = [i.value for i in hd]
+        mini = inf
+        m_i = hd[0]
+        for i in range(len(vl)):
+            if vl[i] < mini:
+                mini = vl[i]
+                m_i = hd[i]
+        return m_i
+
+    def decrease_key(self, head: Head, k) -> None:
         head.value = k
         while head.upper and head.value < head.upper.value:
             temp = head.value
@@ -114,10 +118,10 @@ class BinomialHeap:
         return
 
 
-piramoid = BinomialHeap([11, 9, 7, 5, 3, 1, 2, 4, 6, 8, 10])
-print(piramoid.extract_min())
-print(piramoid.peek_min())
-piramoid.insert(1)
-print(piramoid.peek_min())
-for i in range(10):
-    print(piramoid.extract_min())
+пирамида = BinomialHeap([11, 9, 7, 5, 3, 1, 2, 4, 6, 8, 10])
+print(пирамида.extract_min())
+print(пирамида.peek_min())
+пирамида.insert(1)
+print(пирамида.peek_min())
+for _ in range(10):
+    print(пирамида.extract_min())
