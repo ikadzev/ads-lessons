@@ -29,3 +29,4 @@ Mini's:
 - 24 - https://leetcode.com/problems/validate-binary-search-tree
 - 25 - https://leetcode.com/problems/trim-a-binary-search-tree/
 - 26 - https://leetcode.com/problems/balance-a-binary-search-tree
+- 27 - https://leetcode.com/problems/maximum-frequency-stack
