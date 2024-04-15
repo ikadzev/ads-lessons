@@ -28,7 +28,7 @@ def lsd_sort(sorts):
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 lst = ''
 for i in range(1000):
-    lst += ((alphabet[i:] + alphabet[:i]) * 1000)[::-1]
+    lst += ((alphabet[i:] + alphabet[:i]) * 500)[::-1]
     lst += ' '
 lst = lst.split()
 t = time.time()

@@ -36,3 +36,4 @@ def pol(prompt):
 
 test = '1 + 2 ^ 3 + 4'
 print(pol(test))
+

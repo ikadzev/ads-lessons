@@ -23,10 +23,7 @@ class BinomialHeap:
                     self.heads[h.prio] = h
 
     def insert(self, value):
-        v_head = self.Head(value)
-        if not self.min or value < self.min.value:
-            self.min = v_head
-        self.merge(BinomialHeap(head=v_head))
+        self.merge(BinomialHeap(head=self.Head(value)))
         return
 
     def peek_min(self):
@@ -62,12 +59,14 @@ class BinomialHeap:
             head.value = head.upper.value
             head.upper.value = temp
             head = head.upper
+        self.min = self._seek_min()
 
     def delete(self, h: Head):
         while h.kids:
             h = h.kids[0]
         self.decrease_key(h, -inf)
         self.extract_min()
+        self.min = self._seek_min()
         return
 
     def _merge_heads(self, head1, head2):
@@ -115,6 +114,7 @@ class BinomialHeap:
                 carry = None
         for key, value in new.heads.items():
             self.heads[key] = value
+        self.min = self._seek_min()
         return
 
 

@@ -6,11 +6,12 @@ def swap(array, f, s):
     array[f], array[s] = array[s], array[f]
 
 
-def flag(array: list[int], pivot: int):
-    length = len(array)
-    i = 0
-    colors = [0, length - 1]
-    while i < length and i <= colors[1]:
+def flag(array: list[int], pivot: int, s: int = 0, f: int = -1) -> list[int]:
+    if f == -1:
+        f = len(array)
+    i = s
+    colors = [s, f - 1]
+    while i < f and i <= colors[1]:
         if array[i] < pivot:
             if i != colors[0]:
                 swap(array, i, colors[0])
@@ -19,13 +20,13 @@ def flag(array: list[int], pivot: int):
         elif array[i] == pivot:
             swappable = i
         else:
-            if i != colors[1]:
+            if array[i] != array[colors[1]]:
                 swap(array, i, colors[1])
             colors[1] -= 1
             swappable = colors[1] + 1
         if swappable == i:
             i += 1
-    return array, colors
+    return colors
 
 
 def _neg(a: list) -> list:
@@ -149,10 +150,10 @@ def mult_8(first: list, second: list) -> list:
 
 
 def mult_sht(first: list[list[int]], second: list[list[int]]) -> list[list[int]]:
-    """ Multiply matrix's (n^2.81, shtrassen ver.) """
+    """ Multiply matrix's (n^2.81, strassen ver.) """
     assert len(first) == len(second)
     assert len(first[0]) == len(second[0])
-    if len(first) <= 2:
+    if len(first) <= 64:
         assert len(first) == len(first[0]) == len(second) == len(second[0])
         return mult_usual(first, second)
     orig_n = len(first)
@@ -204,3 +205,34 @@ def format_table(types: list[str], parameters: list[str], results: list[list], b
         ret += '\n'
 
     return ret
+
+
+def merge(lst: list[int],
+          first: int,
+          first_end: int,
+          second: int,
+          second_end: int,
+          buffer: int,
+          debug: bool = False) -> None:
+    """ Merging two sorted list into one (w/o buffer, in-place) """
+    assert (first_end - first) + (second_end - second) <= len(lst) - buffer
+    print('merging', lst[first:first_end], 'and', lst[second:second_end],
+          'into', lst, 'with buff', lst[buffer:]) if debug else None
+    while first < first_end and second < second_end:
+        if lst[first] < lst[second]:
+            swap(lst, first, buffer)
+            first += 1
+        else:
+            swap(lst, second, buffer)
+            second += 1
+        buffer += 1
+    while first < first_end:
+        swap(lst, first, buffer)
+        first += 1
+        buffer += 1
+    while second < second_end:
+        swap(lst, second, buffer)
+        second += 1
+        buffer += 1
+    print('done', lst) if debug else None
+    return

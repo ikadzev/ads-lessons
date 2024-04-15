@@ -22,9 +22,9 @@ def bench(algos: list[tuple], tests: list):
 
 
 test = []
-for i in range(40, 101, 20):
+for i in range(200, 250, 5):
     f = np.arange(1, i ** 2 + 1).reshape(i, i).tolist()
     s = np.arange(i ** 2, 0, -1).reshape(i, i).tolist()
     test.append([f, s])
 
-print(bench([('Usual mult', mult_usual), ("Mult by 8 rec's", mult_8), ("Strassen's mult", mult_sht)], test))
+print(bench([('Usual mult', mult_usual), ("Strassen's mult", mult_sht)], test))

@@ -8,7 +8,7 @@ def get_bit_length(number: int) -> int:
 
 def division_bit(to_divide: int, division: int) -> str:
     if division == 0:
-        return f'init is {to_divide} and {division}, div is infinity...'
+        return f'init is {to_divide} and 0, div is infinity...'
     out_num, cur_num = 0, 0
     sign = -1 if to_divide >= 0 > division or to_divide < 0 <= division else 1
     to_divide_abs = abs(to_divide)
@@ -18,18 +18,10 @@ def division_bit(to_divide: int, division: int) -> str:
         cur_num = cur_num << 1
         mask = 1 << (length - i - 1)
         cur_num += (mask & to_divide_abs) >> (length - i - 1)
-        if division > cur_num:
-            out_num *= 2
-            continue
-        d = division_abs
-        cnt = 0
-        while cur_num >= d:
-            cnt += 1
-            d += division_abs
-        d -= division_abs
         out_num *= 2
-        out_num += cnt
-        cur_num = cur_num - d
+        if division_abs <= cur_num:
+            out_num += 1
+            cur_num = cur_num - division_abs
     out = f'init is {to_divide} and {division}, div is {out_num * sign}, rem is {to_divide - out_num * division * sign}'
     return out
 
