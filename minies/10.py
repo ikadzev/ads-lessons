@@ -1,3 +1,4 @@
+import random
 import time
 
 
@@ -25,10 +26,12 @@ def lsd_sort(sorts):
     return sorts
 
 
-alphabet = 'abcdefghijklmnopqrstuvwxyz'
+alphabet = 'abcdefghijklmnopqrstuvwxyz' # 26
+n = 500
 lst = ''
 for i in range(1000):
-    lst += ((alphabet[i:] + alphabet[:i]) * 500)[::-1]
+    for i in range(n):
+        lst += alphabet[random.randint(0, 25)]
     lst += ' '
 lst = lst.split()
 t = time.time()
