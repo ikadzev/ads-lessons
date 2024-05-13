@@ -16,10 +16,11 @@ class Filter:
         while 1 / (2 ^ self.hash_num) > error:
             self.hash_num += 1
         self.hashes = []
-        self.size = self.hash_num / log(2)
+        self.elem_size = self.hash_num / log(2)
+        self.size = self.elem_size * num
         self._init_hashes()
         self.count = 0
-        self.bits = [0 for _ in range(num * self.size)]
+        self.bits = [0 for _ in range(num * self.elem_size)]
         self.max = num
 
     def _init_hashes(self):
