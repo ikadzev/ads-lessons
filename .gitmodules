@@ -4,3 +4,6 @@
 [submodule "labs/second"]
 	path = labs/second
 	url = https://github.com/nsu-syspro/algorithms-second-task-2024-ikadzev
+[submodule "labs/third"]
+	path = labs/third
+	url = https://github.com/nsu-syspro/algorithms-third-task-second-variant-2024-ikadzev.git

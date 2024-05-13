@@ -30,3 +30,4 @@ Mini's:
 - 25 - https://leetcode.com/problems/trim-a-binary-search-tree/
 - 26 - https://leetcode.com/problems/balance-a-binary-search-tree
 - 27 - https://leetcode.com/problems/maximum-frequency-stack
+- 28 - bloom filter (with hashes)
