@@ -20,7 +20,7 @@ class Filter:
         self.size = self.elem_size * num
         self._init_hashes()
         self.count = 0
-        self.bits = [0 for _ in range(num * self.elem_size)]
+        self.bits = 0
         self.max = num
 
     def _init_hashes(self):
@@ -32,21 +32,22 @@ class Filter:
             exit(1)
         self.count += 1
         for h in self.hashes:
-            self.bits[h(num)] = 1
+            temp = 1 << h(num)
+            self.bits |= temp
 
     def lookup(self, num):
         for h in self.hashes:
-            if self.bits[h(num)] == 0:
+            if (self.bits >> h(num)) % 2 == 0:
                 return 0
         return 1
 
 
 if __name__ == '__main__':
-    filter = Filter(10, 0.3)
+    flter = Filter(10, 0.3)
     for i in range(5):
-        filter.insert([i, i, i, i])
-    print(filter.lookup([1, 1, 1, 1]))
-    print(filter.lookup([2, 2, 2, 2]))
-    print(filter.lookup([3, 3, 3, 3]))
-    print(filter.lookup([4, 4, 4, 4]))
-    print(filter.lookup([1, 0, 0, 0]))
+        flter.insert([i, i, i, i])
+    print(flter.lookup([1, 1, 1, 1]))
+    print(flter.lookup([2, 2, 2, 2]))
+    print(flter.lookup([3, 3, 3, 3]))
+    print(flter.lookup([4, 4, 4, 4]))
+    print(flter.lookup([1, 0, 0, 0]))

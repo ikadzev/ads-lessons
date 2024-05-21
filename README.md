@@ -31,3 +31,6 @@ Mini's:
 - 26 - https://leetcode.com/problems/balance-a-binary-search-tree
 - 27 - https://leetcode.com/problems/maximum-frequency-stack
 - 28 - bloom filter (with hashes)
+- 29 - https://leetcode.com/problems/is-graph-bipartite/
+- 30 - https://leetcode.com/problems/sort-items-by-groups-respecting-dependencies
+- 31 - recursive component
