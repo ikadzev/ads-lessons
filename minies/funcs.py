@@ -151,10 +151,7 @@ def mult_8(first: list, second: list) -> list:
 
 def mult_sht(first: list[list[int]], second: list[list[int]]) -> list[list[int]]:
     """ Multiply matrix's (n^2.81, strassen ver.) """
-    assert len(first) == len(second)
-    assert len(first[0]) == len(second[0])
-    if len(first) <= 64:
-        assert len(first) == len(first[0]) == len(second) == len(second[0])
+    if len(first) <= 298:
         return mult_usual(first, second)
     orig_n = len(first)
     first_zero = _to_zeros_square(first)

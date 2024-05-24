@@ -126,7 +126,7 @@ def mult_sht(first: list[list[int]], second: list[list[int]]) -> list[list[int]]
     """ Multiply matrix's (n^2.81, shtrassen ver.) """
     assert len(first) == len(second)
     assert len(first[0]) == len(second[0])
-    if len(first) <= 2:
+    if len(first) <= 299:
         assert len(first) == len(first[0]) == len(second) == len(second[0])
         return mult_usual(first, second)
     orig_n = len(first)

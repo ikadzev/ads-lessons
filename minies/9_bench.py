@@ -22,7 +22,7 @@ def bench(algos: list[tuple], tests: list):
 
 
 test = []
-for i in range(200, 250, 5):
+for i in range(300, 301, 1):
     f = np.arange(1, i ** 2 + 1).reshape(i, i).tolist()
     s = np.arange(i ** 2, 0, -1).reshape(i, i).tolist()
     test.append([f, s])
