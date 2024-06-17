@@ -15,7 +15,7 @@ def top_sort(dep: list[list[int]], dep_count: list[int]) -> list:
     return sortd if len(sortd) == len(dep_count) else None
 
 
-def nipaa(n: int, m: int, group: list[int], before: list[list[int]]) -> list[int]:
+def sortt(n: int, m: int, group: list[int], before: list[list[int]]) -> list[int]:
     for i in range(n):
         if group[i] == -1:
             group[i] = m
@@ -57,6 +57,6 @@ n = 8
 m = 2
 group = [-1, -1, 1, 0, 0, 1, 0, -1]
 beforeItems = [[], [6], [5], [6], [3, 6], [], [], []]
-print(nipaa(n, m, group, beforeItems))
+print(sortt(n, m, group, beforeItems))
 
 

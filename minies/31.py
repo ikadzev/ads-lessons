@@ -8,13 +8,7 @@ class Node:
 
 
 def rec_comp(nodes: dict) -> (list[Node], dict[str, bool]):
-    nodes_linked = dict2link(nodes)
-    is_recs = nodes_linked.values()
-    is_recs = {func.value: is_rec(func) for func in is_recs}
-    depens = []
-    for node in nodes_linked.values():
-        for kid in node.kids:
-            depens.append((node.value, kid.value))
+    nodes_linked, depens = dict2link(nodes)
 
     reversed_nodes = {name: Node(name) for name in nodes_linked.keys()}
     for depen in depens:
@@ -22,37 +16,25 @@ def rec_comp(nodes: dict) -> (list[Node], dict[str, bool]):
 
     visited, stack = [], []
     for node in reversed_nodes.values():
-        visited, stack = dfs(node, visited, stack)
+        visited, stack = dfs(node, visited, stack, False)
 
     visited = []
     comps = []
+    mx = ([None], -1)
     while stack:
         node = stack.pop()
         comp = []
-        visited, comp = dfs_comps(nodes_linked[node.value], visited, comp)
+        visited, comp = dfs(nodes_linked[node.value], visited, comp, True)
         comps.append(comp) if comp else None
+        if len(comp) > mx[1]:
+            mx = ([c.value for c in comp], len(comp))
     for comp in comps:
         for node in range(len(comp)):
             comp[node] = comp[node].value
-    return comps, is_recs
+    return comps, mx
 
 
-def is_rec(node):
-    def _is_rec_inner(node, init):
-        if init in node.kids:
-            return True
-        for kiddo in node.kids:
-            if _is_rec_inner(kiddo, init):
-                return True
-        return False
-
-    for kid in node.kids:
-        if _is_rec_inner(kid, node):
-            return True
-    return False
-
-
-def dict2link(nodes: dict) -> dict:
+def dict2link(nodes: dict) -> (dict, dict):
     names = []
     depens = []
     for node, kids in nodes.items():
@@ -62,42 +44,27 @@ def dict2link(nodes: dict) -> dict:
     nodes = {name: Node(name) for name in names}
     for depen in depens:
         nodes[depen[0]].kids.append(nodes[depen[1]])
-    return nodes
+    return nodes, depens
 
 
-def dfs_comps(node: Node, visited: list[Node], comp: list[Node]) -> (list[Node], list[Node]):
-    if node not in visited:
-        comp.append(node)
-        visited.append(node)
-        for kid in node.kids:
-            visited, comp = dfs_comps(kid, visited, comp)
-    return visited, comp
+def dfs(nod: Node, vst: list[Node], stk: list[Node], comp: bool) -> (list[Node], list[Node]):
+    if nod not in vst:
+        stk.append(nod) if comp else None
+        vst.append(nod)
+        for kid in nod.kids:
+            vst, stk = dfs(kid, vst, stk, comp)
+        stk.append(nod) if not comp else None
+    return vst, stk
 
 
-def dfs(node, visited, stk):
-    if node not in visited:
-        visited.append(node)
-        for kid in node.kids:
-            visited, stk = dfs(kid, visited, stk)
-        stk.append(node)
-    return visited, stk
-
-
-# funcs = {'0': ['4'],
-#          '1': ['0', '7'],
-#          '2': ['1', '4', '6'],
-#          '3': ['0', '3'],
-#          '4': ['0'],
-#          '5': ['2'],
-#          '6': ['4', '5'],
-#          '7': ['1', '3']}
 funcs = {'foo': ['bar', 'baz', 'qux'],
          'bar': ['baz', 'foo', 'bar'],
          'qux': ['qux'],
          'baz': []}
-cycles, recs = rec_comp(funcs)
-mx = max([len(i) for i in cycles])
-maax = [i for i in cycles if len(i) == mx]
-print(*maax, sep=' ')
-rcs = [f'{i} is recursive!' for i, j in recs.items() if j]
-print(*rcs, sep='\n')
+
+cycles, mx = rec_comp(funcs)
+print('Max component:', *mx[0], '\nLength:', mx[1],  sep=' ')
+
+if cycles:
+    lst_recs = set([func for cycle in cycles for func in cycle])
+    print('Functions', lst_recs, 'is recursive')
