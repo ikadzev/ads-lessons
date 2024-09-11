@@ -34,3 +34,5 @@ Mini's:
 - 29 - https://leetcode.com/problems/is-graph-bipartite/
 - 30 - https://leetcode.com/problems/sort-items-by-groups-respecting-dependencies
 - 31 - recursive component
+- 32 - https://leetcode.com/problems/jump-game
+- 33 - https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/
